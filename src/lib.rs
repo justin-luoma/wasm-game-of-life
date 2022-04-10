@@ -2,6 +2,7 @@ mod cell;
 mod cell_state;
 mod utils;
 mod grid;
+mod pattern;
 
 use rand::prelude::*;
 use wasm_bindgen::prelude::*;

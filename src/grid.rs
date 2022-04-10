@@ -5,6 +5,7 @@ use wasm_bindgen::prelude::*;
 
 use crate::cell::Cell;
 use crate::cell_state::CellState;
+use crate::pattern::Pattern;
 use crate::random_bool;
 
 #[wasm_bindgen]
@@ -51,6 +52,19 @@ impl Grid {
         // self.spawn_pulsar(60, 35);
     }
 
+    pub fn spawn_pattern(&mut self, pattern: Pattern, x: usize, y: usize) {
+        if x >= 0 && y >= 0 && x < self.size.0 && y < self.size.1 {
+            match pattern {
+                Pattern::Blinker => self.spawn_blinker(x, y),
+                Pattern::Toad => self.spawn_toad(x, y),
+                Pattern::Beacon => self.spawn_beacon(x, y),
+                Pattern::Pulsar => self.spawn_pulsar(x, y),
+                Pattern::Pentadecathlon => self.spawn_pentadecanthlon(x, y),
+                Pattern::Glider => self.spawn_glider(x, y),
+            }
+        }
+    }
+
     pub fn randomize(&mut self) {
         let mut rng = rand::thread_rng();
 
@@ -60,6 +74,26 @@ impl Grid {
                 match alive {
                     true => self.update_cell(x, y, CellState::Alive),
                     false => self.update_cell(x, y, CellState::Dead),
+                }
+            }
+        }
+    }
+
+    pub fn randomize_center(&mut self) {
+        let mut rng = rand::thread_rng();
+
+        for x in 0..self.size.0 {
+            for y in 0..self.size.1 {
+                if y > (self.size.0 / 2 - 25)
+                    && x < (self.size.0 / 2 + 25)
+                    && x > (self.size.0 / 2 - 25)
+                    && y < (self.size.0 / 2 + 25)
+                {
+                    let alive = random_bool(&mut rng);
+                    match alive {
+                        true => self.update_cell(x, y, CellState::Alive),
+                        false => self.update_cell(x, y, CellState::Dead),
+                    }
                 }
             }
         }

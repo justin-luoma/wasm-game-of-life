@@ -14,6 +14,7 @@
             align-items: start;
             flex-direction: column;
             overflow: hidden;
+            background-color: #b3b3b3;
         }
 
         pre {
@@ -29,6 +30,12 @@
             flex-direction: row;
             justify-content: space-between;
         }
+
+        #spawnControls {
+            display: flex;
+            flex-direction: column;
+            border: thin solid black;
+        }
     </style>
 </head>
 <body>
@@ -37,7 +44,18 @@
 <script src="./bootstrap.js"></script>
 <div id="controls">
     <button id="randomize">Randomize</button>
+    <button id="randomizeCenter">Randomize Center</button>
     <button id="reset">Reset</button>
+    <div id="spawnControls">
+        <label><select id="spawnSelection"></select></label>
+        <label>
+            x: <input id="x" type="number">
+        </label>
+        <label>
+            y: <input id="y" type="number">
+        </label>
+        <button id="spawn">Spawn</button>
+    </div>
 </div>
 </body>
 </html>
