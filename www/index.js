@@ -1,7 +1,10 @@
-import {Grid, get_patterns_as_string} from "wasm-game-of-life";
+import {get_patterns_as_string, Grid} from "wasm-game-of-life";
 
 const pre = document.getElementById("game-of-life-canvas");
 const grid = Grid.new(100, 100);
+
+let paused;
+
 grid.spawn_glider_gun(30, 15);
 grid.spawn_pulsar(10, 35);
 grid.spawn_pentadecanthlon(25, 55);
@@ -16,8 +19,8 @@ const renderLoop = () => {
 };
 
 const spawn = () => {
-    const x = document.getElementById("x").value
-    const y = document.getElementById("y").value
+    const x = document.getElementById("xSpawn").value
+    const y = document.getElementById("ySpawn").value
     const pattern = document.getElementById("spawnSelection").value;
     console.log(pattern);
     grid.spawn_pattern(pattern, x, y);
@@ -27,11 +30,13 @@ const spawn = () => {
     // }, 15000);
 };
 
-const render = () => {
-    grid.step_forward();
-    setTimeout(() => {
-        render();
-    }, 150);
+const tick = () => {
+    if (!paused) {
+        grid.step_forward();
+        setTimeout(() => {
+            tick();
+        }, 150);
+    }
 };
 
 function randomize() {
@@ -46,6 +51,32 @@ function reset() {
     grid.reset();
 }
 
+function pause() {
+    const pauseBtn = document.getElementById("pause");
+    if (paused) {
+        paused = false;
+        tick();
+        pauseBtn.innerText = "Pause";
+    } else {
+        paused = true;
+        pauseBtn.innerText = "Resume";
+    }
+}
+
+function reviveCell() {
+    const coordString = document.getElementById("coordsRevive").value;
+    let coords = coordString.split("\n");
+    coords.forEach(coord => {
+        if (coord.split(",").length === 2) {
+            const [x, y] = coord.split(",");
+            grid.revive_cell(x, y);
+        } else {
+            const [x, y] = coord.split(".");
+            grid.revive_cell(x, y);
+        }
+    });
+}
+
 const setup = () => {
     const randomizeBtn = document.getElementById("randomize");
     randomizeBtn.addEventListener("click", randomize);
@@ -56,6 +87,9 @@ const setup = () => {
     const resetBtn = document.getElementById("reset");
     resetBtn.addEventListener("click", reset);
 
+    const pauseBtn = document.getElementById("pause");
+    pauseBtn.addEventListener("click", pause);
+
     const spawnBtn = document.getElementById("spawn");
     spawnBtn.addEventListener("click", spawn);
     const spawnSelection = document.getElementById("spawnSelection");
@@ -64,14 +98,17 @@ const setup = () => {
         opt.value = i;
         opt.innerHTML = pattern;
         spawnSelection.appendChild(opt);
-    })
+    });
+
+    const reviveBtn = document.getElementById("revive");
+    reviveBtn.addEventListener("click", reviveCell);
 };
 
 setup();
 
 requestAnimationFrame(renderLoop);
 
-render();
+tick();
 
 console.log(get_patterns_as_string());
 

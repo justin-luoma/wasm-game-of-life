@@ -17,7 +17,12 @@ pub enum Pattern {
     Glider,
     LightSpaceship,
     MiddleSpaceship,
+    HeavySpaceship,
     GliderGun,
+    RPentomino,
+    DieHard,
+    Acorn,
+    InfiniteGrowth1,
 }
 
 #[wasm_bindgen]

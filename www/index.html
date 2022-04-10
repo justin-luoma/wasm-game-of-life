@@ -37,6 +37,12 @@
             flex-direction: column;
             border: thin solid black;
         }
+
+        #reviveControls {
+            display: flex;
+            flex-direction: column;
+            border: thin solid black;
+        }
     </style>
 </head>
 <body>
@@ -47,17 +53,24 @@
     <button id="randomize">Randomize</button>
     <button id="randomizeCenter">Randomize Center</button>
     <button id="reset">Reset</button>
+    <button id="pause">Pause</button>
     <div id="spawnControls">
         <label>
             pattern: <select id="spawnSelection"></select>
         </label>
         <label>
-            x: <input id="x" type="number" value="0">
+            x: <input id="xSpawn" type="number" value="0">
         </label>
         <label>
-            y: <input id="y" type="number" value="0">
+            y: <input id="ySpawn" type="number" value="0">
         </label>
         <button id="spawn">Spawn</button>
+    </div>
+    <div id="reviveControls">
+        <label>
+            coords (x,y or x.y): <textarea id="coordsRevive"></textarea>
+        </label>
+        <button id="revive">Revive Cells</button>
     </div>
 </div>
 </body>

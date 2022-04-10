@@ -68,6 +68,11 @@ impl Grid {
                 Pattern::Boat => self.spawn_boat(x, y),
                 Pattern::LightSpaceship => self.spawn_light_spaceship(x, y),
                 Pattern::MiddleSpaceship => self.spawn_middle_spaceship(x, y),
+                Pattern::HeavySpaceship => self.spawn_heavy_spaceship(x, y),
+                Pattern::RPentomino => self.spawn_r_pentomino(x, y),
+                Pattern::DieHard => self.spawn_die_hard(x, y),
+                Pattern::Acorn => self.spawn_acorn(x, y),
+                Pattern::InfiniteGrowth1 => self.spawn_infinite_growth_1(x, y),
             }
         }
     }
@@ -317,6 +322,26 @@ impl Grid {
         }
     }
 
+    pub fn spawn_heavy_spaceship(&mut self, x: usize, y: usize) {
+        if x + 6 < self.size.0 && y + 4 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 2, y),
+                (x + 3, y),
+                (x, y + 1),
+                (x + 5, y + 1),
+                (x + 6, y + 2),
+                (x, y + 3),
+                (x + 6, y + 3),
+                (x + 1, y + 4),
+                (x + 2, y + 4),
+                (x + 3, y + 4),
+                (x + 4, y + 4),
+                (x + 5, y + 4),
+                (x + 6, y + 4),
+            ]);
+        }
+    }
+
     pub fn spawn_glider_gun(&mut self, x: usize, y: usize) {
         if x - 18 >= 0 && y - 4 >= 0 && x + 17 < self.size.0 && y + 4 < self.size.1 {
             self.set_cells_alive(vec![
@@ -362,6 +387,62 @@ impl Grid {
         }
     }
 
+    pub fn spawn_r_pentomino(&mut self, x: usize, y: usize) {
+        if x + 2 < self.size.0 && y + 2 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 1, y),
+                (x + 2, y),
+                (x, y + 1),
+                (x + 1, y + 1),
+                (x + 1, y + 2),
+            ])
+        }
+    }
+
+    pub fn spawn_die_hard(&mut self, x: usize, y: usize) {
+        if x + 7 < self.size.0 && y + 2 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 6, y),
+                (x, y + 1),
+                (x + 1, y + 1),
+                (x + 1, y + 2),
+                (x + 5, y + 2),
+                (x + 6, y + 2),
+            ])
+        }
+    }
+
+    pub fn spawn_acorn(&mut self, x: usize, y: usize) {
+        if x + 6 < self.size.0 && y + 2 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 1, y),
+                (x + 3, y + 1),
+                (x, y + 2),
+                (x + 1, y + 2),
+                (x + 4, y + 2),
+                (x + 5, y + 2),
+                (x + 6, y + 2),
+            ])
+        }
+    }
+
+    pub fn spawn_infinite_growth_1(&mut self, x: usize, y: usize) {
+        if x + 7 < self.size.0 && y + 5 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 6, y),
+                (x + 4, y + 1),
+                (x + 6, y + 1),
+                (x + 7, y + 1),
+                (x + 4, y + 2),
+                (x + 6, y + 2),
+                (x + 4, y + 3),
+                (x + 2, y + 4),
+                (x, y + 5),
+                (x + 2, y + 5),
+            ])
+        }
+    }
+
     pub fn step_forward(&mut self) {
         let state = self.clone();
         for x in 0..self.size.0 {
@@ -387,7 +468,7 @@ impl Grid {
         self.update_cell(x, y, CellState::Dead);
     }
 
-    fn revive_cell(&mut self, x: usize, y: usize) {
+    pub fn revive_cell(&mut self, x: usize, y: usize) {
         self.update_cell(x, y, CellState::Alive);
     }
 
