@@ -6,11 +6,18 @@ use wasm_bindgen::prelude::*;
 #[derive(Display, EnumIter)]
 pub enum Pattern {
     Blinker,
+    Block,
+    BeeHive,
+    Loaf,
+    Boat,
     Toad,
     Beacon,
     Pulsar,
     Pentadecathlon,
     Glider,
+    LightSpaceship,
+    MiddleSpaceship,
+    GliderGun,
 }
 
 #[wasm_bindgen]

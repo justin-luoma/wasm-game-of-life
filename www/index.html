@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <title>Hello wasm-pack!</title>
@@ -11,7 +11,7 @@
             width: 100vw;
             height: 100vh;
             display: flex;
-            align-items: start;
+            align-items: center;
             flex-direction: column;
             overflow: hidden;
             background-color: #b3b3b3;
@@ -27,6 +27,7 @@
         #controls {
             width: 25vw;
             display: flex;
+            align-items: center;
             flex-direction: row;
             justify-content: space-between;
         }
@@ -47,12 +48,14 @@
     <button id="randomizeCenter">Randomize Center</button>
     <button id="reset">Reset</button>
     <div id="spawnControls">
-        <label><select id="spawnSelection"></select></label>
         <label>
-            x: <input id="x" type="number">
+            pattern: <select id="spawnSelection"></select>
         </label>
         <label>
-            y: <input id="y" type="number">
+            x: <input id="x" type="number" value="0">
+        </label>
+        <label>
+            y: <input id="y" type="number" value="0">
         </label>
         <button id="spawn">Spawn</button>
     </div>

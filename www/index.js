@@ -31,7 +31,7 @@ const render = () => {
     grid.step_forward();
     setTimeout(() => {
         render();
-    }, 250);
+    }, 150);
 };
 
 function randomize() {

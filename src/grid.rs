@@ -61,6 +61,13 @@ impl Grid {
                 Pattern::Pulsar => self.spawn_pulsar(x, y),
                 Pattern::Pentadecathlon => self.spawn_pentadecanthlon(x, y),
                 Pattern::Glider => self.spawn_glider(x, y),
+                Pattern::GliderGun => self.spawn_glider_gun(x, y),
+                Pattern::Block => self.spawn_block(x, y),
+                Pattern::BeeHive => self.spawn_beehive(x, y),
+                Pattern::Loaf => self.spawn_loaf(x, y),
+                Pattern::Boat => self.spawn_boat(x, y),
+                Pattern::LightSpaceship => self.spawn_light_spaceship(x, y),
+                Pattern::MiddleSpaceship => self.spawn_middle_spaceship(x, y),
             }
         }
     }
@@ -84,10 +91,10 @@ impl Grid {
 
         for x in 0..self.size.0 {
             for y in 0..self.size.1 {
-                if y > (self.size.0 / 2 - 25)
-                    && x < (self.size.0 / 2 + 25)
-                    && x > (self.size.0 / 2 - 25)
-                    && y < (self.size.0 / 2 + 25)
+                if y > (self.size.1 / 2 - (self.size.1 / 4))
+                    && x < (self.size.0 / 2 + (self.size.0 / 4))
+                    && x > (self.size.0 / 2 - (self.size.0 / 4))
+                    && y < (self.size.1 / 2 + (self.size.1 / 4))
                 {
                     let alive = random_bool(&mut rng);
                     match alive {
@@ -122,6 +129,51 @@ impl Grid {
     pub fn spawn_blinker(&mut self, x: usize, y: usize) {
         if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
             self.set_cells_alive(vec![(x, y - 1), (x, y), (x, y + 1)]);
+        }
+    }
+
+    pub fn spawn_block(&mut self, x: usize, y: usize) {
+        if x >= 0 && y >= 0 && x + 1 < self.size.0 && y + 1 < self.size.1 {
+            self.set_cells_alive(vec![(x, y), (x, y + 1), (x + 1, y), (x + 1, y + 1)]);
+        }
+    }
+
+    pub fn spawn_beehive(&mut self, x: usize, y: usize) {
+        if x + 2 < self.size.0 && y + 3 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 1, y),
+                (x + 2, y),
+                (x, y + 1),
+                (x + 3, y + 1),
+                (x + 1, y + 2),
+                (x + 2, y + 2),
+            ]);
+        }
+    }
+
+    pub fn spawn_loaf(&mut self, x: usize, y: usize) {
+        if x + 3 < self.size.0 && y + 3 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 1, y),
+                (x + 2, y),
+                (x, y + 1),
+                (x + 3, y + 1),
+                (x + 1, y + 2),
+                (x + 3, y + 2),
+                (x + 2, y + 3),
+            ]);
+        }
+    }
+
+    pub fn spawn_boat(&mut self, x: usize, y: usize) {
+        if x + 2 < self.size.0 && y + 2 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x + 1, y),
+                (x, y + 1),
+                (x + 2, y + 1),
+                (x + 1, y + 2),
+            ]);
         }
     }
 
@@ -227,6 +279,40 @@ impl Grid {
                 (x + 1, y + 3),
                 (x, y + 4),
                 (x, y + 5),
+            ]);
+        }
+    }
+
+    pub fn spawn_light_spaceship(&mut self, x: usize, y: usize) {
+        if x + 4 < self.size.0 && y + 3 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x + 3, y),
+                (x + 4, y + 1),
+                (x, y + 2),
+                (x + 4, y + 2),
+                (x + 1, y + 3),
+                (x + 2, y + 3),
+                (x + 3, y + 3),
+                (x + 4, y + 3),
+            ]);
+        }
+    }
+
+    pub fn spawn_middle_spaceship(&mut self, x: usize, y: usize) {
+        if x + 5 < self.size.0 && y + 4 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 2, y),
+                (x, y + 1),
+                (x + 4, y + 1),
+                (x + 5, y + 2),
+                (x, y + 3),
+                (x + 5, y + 3),
+                (x + 1, y + 4),
+                (x + 2, y + 4),
+                (x + 3, y + 4),
+                (x + 4, y + 4),
+                (x + 5, y + 4),
             ]);
         }
     }
