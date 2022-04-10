@@ -73,11 +73,6 @@ impl Grid {
         }
     }
 
-    pub fn spawn_new(&mut self) {
-        // self.set_cells_alive(vec![(1, 0), (2, 1), (0, 2), (1, 2), (2, 2)]);
-        self.spawn_glider(1, 1);
-    }
-
     pub fn spawn_glider(&mut self, x: usize, y: usize) {
         if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
             self.set_cells_alive(vec![
@@ -93,6 +88,34 @@ impl Grid {
     pub fn spawn_blinker(&mut self, x: usize, y: usize) {
         if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
             self.set_cells_alive(vec![(x, y - 1), (x, y), (x, y + 1)]);
+        }
+    }
+
+    pub fn spawn_toad(&mut self, x: usize, y: usize) {
+        if x - 1 >= 0 && y - 2 >= 0 && x + 2 < self.size.0 && y + 1 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x, y - 1),
+                (x - 1, y),
+                (x + 1, y),
+                (x + 1, y - 1),
+                (x + 2, y - 1),
+            ]);
+        }
+    }
+
+    pub fn spawn_beacon(&mut self, x: usize, y: usize) {
+        if x - 1 >= 0 && y - 1 >= 0 && x + 2 < self.size.0 && y + 2 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x, y - 1),
+                (x - 1, y),
+                (x - 1, y - 1),
+                (x + 1, y + 1),
+                (x + 2, y + 1),
+                (x + 1, y + 2),
+                (x + 2, y + 2),
+            ]);
         }
     }
 

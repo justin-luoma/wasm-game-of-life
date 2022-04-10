@@ -5,6 +5,8 @@ const grid = Grid.new(75, 75);
 grid.spawn_glider_gun(30, 15);
 grid.spawn_pulsar(10, 35);
 grid.spawn_pentadecanthlon(25, 55);
+grid.spawn_beacon(55, 3);
+grid.spawn_toad(65, 15);
 
 const renderLoop = () => {
     pre.textContent = grid.render();
