@@ -1,9 +1,11 @@
 use std::fmt::{Display, Formatter};
 
+use rand::prelude::*;
 use wasm_bindgen::prelude::*;
 
 use crate::cell::Cell;
 use crate::cell_state::CellState;
+use crate::random_bool;
 
 #[wasm_bindgen]
 #[derive(Clone, Debug, Eq, PartialEq)]
@@ -41,11 +43,180 @@ impl Grid {
     }
 
     pub fn init(&mut self) {
-        self.set_cells_alive(vec![(1, 0), (2, 1), (0, 2), (1, 2), (2, 2)]);
+
+        // self.randomize();
+        // self.spawn_blinker(25, 15);
+        // self.spawn_blinker(35, 5);
+        // self.spawn_pentadecanthlon(45, 10);
+        // self.spawn_pulsar(60, 35);
+    }
+
+    pub fn randomize(&mut self) {
+        let mut rng = rand::thread_rng();
+
+        for x in 0..self.size.0 {
+            for y in 0..self.size.1 {
+                let alive = random_bool(&mut rng);
+                match alive {
+                    true => self.update_cell(x, y, CellState::Alive),
+                    false => self.update_cell(x, y, CellState::Dead),
+                }
+            }
+        }
+    }
+
+    pub fn reset(&mut self) {
+        for x in 0..self.size.0 {
+            for y in 0..self.size.1 {
+                self.update_cell(x, y, CellState::Dead);
+            }
+        }
     }
 
     pub fn spawn_new(&mut self) {
-        self.set_cells_alive(vec![(1, 0), (2, 1), (0, 2), (1, 2), (2, 2)]);
+        // self.set_cells_alive(vec![(1, 0), (2, 1), (0, 2), (1, 2), (2, 2)]);
+        self.spawn_glider(1, 1);
+    }
+
+    pub fn spawn_glider(&mut self, x: usize, y: usize) {
+        if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y - 1),
+                (x + 1, y),
+                (x, y + 1),
+                (x - 1, y + 1),
+                (x + 1, y + 1),
+            ]);
+        }
+    }
+
+    pub fn spawn_blinker(&mut self, x: usize, y: usize) {
+        if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
+            self.set_cells_alive(vec![(x, y - 1), (x, y), (x, y + 1)]);
+        }
+    }
+
+    pub fn spawn_pulsar(&mut self, x: usize, y: usize) {
+        if x - 6 >= 0 && x + 6 < self.size.0 && y - 6 >= 0 && y + 6 < self.size.1 {
+            self.set_cells_alive(vec![
+                //upper left
+                (x - 2, y - 1),
+                (x - 3, y - 1),
+                (x - 4, y - 1),
+                (x - 1, y - 2),
+                (x - 1, y - 3),
+                (x - 1, y - 4),
+                (x - 2, y - 6),
+                (x - 3, y - 6),
+                (x - 4, y - 6),
+                (x - 6, y - 2),
+                (x - 6, y - 3),
+                (x - 6, y - 4),
+                //upper right
+                (x - 2, y + 1),
+                (x - 3, y + 1),
+                (x - 4, y + 1),
+                (x - 1, y + 2),
+                (x - 1, y + 3),
+                (x - 1, y + 4),
+                (x - 2, y + 6),
+                (x - 3, y + 6),
+                (x - 4, y + 6),
+                (x - 6, y + 2),
+                (x - 6, y + 3),
+                (x - 6, y + 4),
+                //lower left
+                (x + 2, y - 1),
+                (x + 3, y - 1),
+                (x + 4, y - 1),
+                (x + 1, y - 2),
+                (x + 1, y - 3),
+                (x + 1, y - 4),
+                (x + 2, y - 6),
+                (x + 3, y - 6),
+                (x + 4, y - 6),
+                (x + 6, y - 2),
+                (x + 6, y - 3),
+                (x + 6, y - 4),
+                //lower right
+                (x + 2, y + 1),
+                (x + 3, y + 1),
+                (x + 4, y + 1),
+                (x + 1, y + 2),
+                (x + 1, y + 3),
+                (x + 1, y + 4),
+                (x + 2, y + 6),
+                (x + 3, y + 6),
+                (x + 4, y + 6),
+                (x + 6, y + 2),
+                (x + 6, y + 3),
+                (x + 6, y + 4),
+            ]);
+        }
+    }
+
+    pub fn spawn_pentadecanthlon(&mut self, x: usize, y: usize) {
+        if x - 4 >= 0 && y - 7 >= 0 && x + 4 < self.size.0 && y + 8 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x, y - 1),
+                (x - 1, y - 2),
+                (x + 1, y - 2),
+                (x, y - 3),
+                (x, y - 4),
+                (x, y + 1),
+                (x, y + 2),
+                (x - 1, y + 3),
+                (x + 1, y + 3),
+                (x, y + 4),
+                (x, y + 5),
+            ]);
+        }
+    }
+
+    pub fn spawn_glider_gun(&mut self, x: usize, y: usize) {
+        if x - 18 >= 0 && y - 4 >= 0 && x + 17 < self.size.0 && y + 4 < self.size.1 {
+            self.set_cells_alive(vec![
+                //left
+                (x - 1, y + 1),
+                (x - 2, y),
+                (x - 2, y + 1),
+                (x - 2, y + 2),
+                (x - 3, y - 1),
+                (x - 3, y + 3),
+                (x - 4, y + 1),
+                (x - 5, y - 2),
+                (x - 5, y + 4),
+                (x - 6, y - 2),
+                (x - 6, y + 4),
+                (x - 7, y - 1),
+                (x - 7, y + 3),
+                (x - 8, y),
+                (x - 8, y + 2),
+                (x - 8, y + 1),
+                (x - 17, y),
+                (x - 18, y),
+                (x - 17, y + 1),
+                (x - 18, y + 1),
+                //right
+                (x + 2, y),
+                (x + 2, y - 1),
+                (x + 2, y - 2),
+                (x + 3, y),
+                (x + 3, y - 1),
+                (x + 3, y - 2),
+                (x + 4, y + 1),
+                (x + 4, y - 3),
+                (x + 6, y + 1),
+                (x + 6, y + 2),
+                (x + 6, y - 3),
+                (x + 6, y - 4),
+                (x + 16, y - 1),
+                (x + 16, y - 2),
+                (x + 17, y - 1),
+                (x + 17, y - 2),
+            ]);
+        }
     }
 
     pub fn step_forward(&mut self) {

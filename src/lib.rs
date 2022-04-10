@@ -3,6 +3,7 @@ mod cell_state;
 mod grid;
 mod utils;
 
+use rand::prelude::*;
 use wasm_bindgen::prelude::*;
 
 // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
@@ -19,4 +20,8 @@ extern "C" {
 #[wasm_bindgen]
 pub fn greet() {
     alert("Hello, wasm-game-of-life!");
+}
+
+fn random_bool(rng: &mut ThreadRng) -> bool {
+    rng.gen_range(0..=1) == 0
 }
