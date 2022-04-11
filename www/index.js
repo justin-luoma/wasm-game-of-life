@@ -1,7 +1,11 @@
 import {get_patterns_as_string, Grid} from "wasm-game-of-life";
 
 const pre = document.getElementById("game-of-life-canvas");
-const grid = Grid.new(100, 100);
+
+const widthX = 200;
+const widthY = 200;
+
+const grid = Grid.new(widthX, widthY);
 
 let paused;
 
@@ -22,12 +26,7 @@ const spawn = () => {
     const x = document.getElementById("xSpawn").value
     const y = document.getElementById("ySpawn").value
     const pattern = document.getElementById("spawnSelection").value;
-    console.log(pattern);
     grid.spawn_pattern(pattern, x, y);
-    // grid.spawn_glider(2 ,2);
-    // setTimeout(() => {
-    //     spawn();
-    // }, 15000);
 };
 
 const tick = () => {
@@ -102,6 +101,9 @@ const setup = () => {
 
     const reviveBtn = document.getElementById("revive");
     reviveBtn.addEventListener("click", reviveCell);
+
+    const dimensions = document.getElementById("dimensions");
+    dimensions.innerText = `${widthX} x ${widthY}`
 };
 
 setup();

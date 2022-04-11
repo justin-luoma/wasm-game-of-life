@@ -23,6 +23,7 @@ pub enum Pattern {
     DieHard,
     Acorn,
     InfiniteGrowth1,
+    InfiniteGrowth2,
 }
 
 #[wasm_bindgen]

@@ -22,10 +22,11 @@
             left: 0;
             display: inline-block;
             line-height: .80;
+            font-size: .5em;
         }
 
         #controls {
-            width: 25vw;
+            width: 45vw;
             display: flex;
             align-items: center;
             flex-direction: row;
@@ -50,27 +51,32 @@
 <noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
 <script src="./bootstrap.js"></script>
 <div id="controls">
-    <button id="randomize">Randomize</button>
-    <button id="randomizeCenter">Randomize Center</button>
-    <button id="reset">Reset</button>
-    <button id="pause">Pause</button>
-    <div id="spawnControls">
-        <label>
-            pattern: <select id="spawnSelection"></select>
-        </label>
-        <label>
-            x: <input id="xSpawn" type="number" value="0">
-        </label>
-        <label>
-            y: <input id="ySpawn" type="number" value="0">
-        </label>
-        <button id="spawn">Spawn</button>
+    <div>
+        <button id="randomize">Randomize</button>
+        <button id="randomizeCenter">Randomize Center</button>
+        <button id="reset">Reset</button>
+        <button id="pause">Pause</button>
+        <div id="spawnControls">
+            <label>
+                pattern: <select id="spawnSelection"></select>
+            </label>
+            <label>
+                x: <input id="xSpawn" type="number" value="0">
+            </label>
+            <label>
+                y: <input id="ySpawn" type="number" value="0">
+            </label>
+            <button id="spawn">Spawn</button>
+        </div>
+        <div id="reviveControls">
+            <label>
+                coords (x,y or x.y): <textarea id="coordsRevive"></textarea>
+            </label>
+            <button id="revive">Revive Cells</button>
+        </div>
     </div>
-    <div id="reviveControls">
-        <label>
-            coords (x,y or x.y): <textarea id="coordsRevive"></textarea>
-        </label>
-        <button id="revive">Revive Cells</button>
+    <div>
+        <label>Dimensions: <span id="dimensions"></span></label>
     </div>
 </div>
 </body>

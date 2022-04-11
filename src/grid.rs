@@ -73,6 +73,7 @@ impl Grid {
                 Pattern::DieHard => self.spawn_die_hard(x, y),
                 Pattern::Acorn => self.spawn_acorn(x, y),
                 Pattern::InfiniteGrowth1 => self.spawn_infinite_growth_1(x, y),
+                Pattern::InfiniteGrowth2 => self.spawn_infinite_growth_2(x, y),
             }
         }
     }
@@ -439,6 +440,26 @@ impl Grid {
                 (x + 2, y + 4),
                 (x, y + 5),
                 (x + 2, y + 5),
+            ])
+        }
+    }
+
+    pub fn spawn_infinite_growth_2(&mut self, x: usize, y: usize) {
+        if x + 4 < self.size.0 && y + 4 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x + 1, y),
+                (x + 2, y),
+                (x + 4, y),
+                (x, y + 1),
+                (x + 3, y + 2),
+                (x + 4, y + 2),
+                (x + 1, y + 3),
+                (x + 2, y + 3),
+                (x + 4, y + 3),
+                (x, y + 4),
+                (x + 2, y + 4),
+                (x + 4, y + 4),
             ])
         }
     }
