@@ -92,6 +92,7 @@ impl Grid {
                 Pattern::Copperhead => self.spawn_copperhead(x, y),
                 Pattern::Almosymmetric => self.spawn_almosymmetric(x, y),
                 Pattern::GliderLoop => self.spawn_glider_loop(x, y),
+                Pattern::FastForwardForceField => self.spawn_fast_forward_force_field(x, y),
             }
         }
     }
@@ -538,6 +539,46 @@ impl Grid {
                 (x + 2, y + 4),
                 (x + 4, y + 4),
             ])
+        }
+    }
+
+    pub fn spawn_fast_forward_force_field(&mut self, x: usize, y: usize) {
+        if x + 16 < self.size.0 && y + 6 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 7, y),
+                (x + 14, y),
+                //
+                (x + 8, y + 1),
+                (x + 15, y + 1),
+                (x + 16, y + 1),
+                //
+                (x + 2, y + 2),
+                (x + 3, y + 2),
+                (x + 6, y + 2),
+                (x + 7, y + 2),
+                (x + 8, y + 2),
+                (x + 14, y + 2),
+                (x + 15, y + 2),
+                //
+                (x, y + 3),
+                (x + 1, y + 3),
+                (x + 3, y + 3),
+                (x + 4, y + 3),
+                //
+                (x, y + 4),
+                (x + 1, y + 4),
+                (x + 2, y + 4),
+                (x + 3, y + 4),
+                (x + 13, y + 4),
+                //
+                (x + 1, y + 5),
+                (x + 2, y + 5),
+                (x + 12, y + 5),
+                (x + 13, y + 5),
+                //
+                (x + 12, y + 6),
+                (x + 14, y + 6),
+            ]);
         }
     }
 
