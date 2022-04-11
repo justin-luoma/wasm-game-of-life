@@ -23,6 +23,9 @@ grid.spawn_pulsar(10, 35);
 grid.spawn_pentadecanthlon(25, 55);
 grid.spawn_beacon(55, 3);
 grid.spawn_toad(65, 15);
+grid.spawn_acorn(100, 175);
+grid.spawn_r_pentomino(180, 25);
+grid.spawn_infinite_growth_1(100, 100);
 
 const ctx = canvas.getContext("2d");
 
@@ -164,12 +167,12 @@ canvas.addEventListener("click", event => {
     const canvasLeft = (event.clientX - boundingRect.left) * scaleX;
     const canvasTop = (event.clientY - boundingRect.top) * scaleY;
 
-    const row = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
-    const col = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+    const x = Math.min(Math.floor(canvasLeft / (CELL_SIZE + 1)), width - 1);
+    const y = Math.min(Math.floor(canvasTop / (CELL_SIZE + 1)), height - 1);
 
-    console.log("click", row, col);
+    console.log("click", x, y);
 
-    grid.revive_cell(col, row);
+    grid.revive_cell(x, y);
 
     drawCells();
     drawGrid();
