@@ -39,6 +39,21 @@ impl Grid {
         }
     }
 
+    pub fn get_cells(&self) -> *const bool {
+        let mut flat: Vec<bool> = vec![];
+        for y in 0..self.size.1 {
+            for x in 0..self.size.0 {
+                let cell = self.cells[x][y];
+                match cell.state {
+                    CellState::Alive => flat.push(true),
+                    CellState::Dead => flat.push(false),
+                }
+            }
+        }
+
+        flat.as_ptr()
+    }
+
     pub fn render(&self) -> String {
         self.to_string()
     }
