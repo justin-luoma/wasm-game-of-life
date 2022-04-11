@@ -74,6 +74,7 @@ impl Grid {
                 Pattern::Acorn => self.spawn_acorn(x, y),
                 Pattern::InfiniteGrowth1 => self.spawn_infinite_growth_1(x, y),
                 Pattern::InfiniteGrowth2 => self.spawn_infinite_growth_2(x, y),
+                Pattern::Copperhead => self.spawn_copperhead(x, y),
             }
         }
     }
@@ -385,6 +386,41 @@ impl Grid {
                 (x + 17, y - 1),
                 (x + 17, y - 2),
             ]);
+        }
+    }
+
+    pub fn spawn_copperhead(&mut self, x: usize, y: usize) {
+        if x + 11 < self.size.0 && y + 7 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 5, y),
+                (x + 7, y),
+                (x + 8, y),
+                (x + 4, y + 1),
+                (x + 11, y + 1),
+                (x + 3, y + 2),
+                (x + 4, y + 2),
+                (x + 8, y + 2),
+                (x + 11, y + 2),
+                (x, y + 3),
+                (x + 1, y + 3),
+                (x + 3, y + 3),
+                (x + 9, y + 3),
+                (x + 10, y + 3),
+                (x, y + 4),
+                (x + 1, y + 4),
+                (x + 3, y + 4),
+                (x + 9, y + 4),
+                (x + 10, y + 4),
+                (x + 3, y + 5),
+                (x + 4, y + 5),
+                (x + 8, y + 5),
+                (x + 11, y + 5),
+                (x + 4, y + 6),
+                (x + 11, y + 6),
+                (x + 5, y + 7),
+                (x + 7, y + 7),
+                (x + 8, y + 7),
+            ])
         }
     }
 

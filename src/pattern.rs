@@ -18,6 +18,7 @@ pub enum Pattern {
     LightSpaceship,
     MiddleSpaceship,
     HeavySpaceship,
+    Copperhead,
     GliderGun,
     RPentomino,
     DieHard,
