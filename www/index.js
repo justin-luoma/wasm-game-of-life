@@ -1,7 +1,7 @@
 import {get_patterns_as_string, Grid} from "wasm-game-of-life";
 import {memory} from "wasm-game-of-life/wasm_game_of_life_bg.wasm";
 
-const CELL_SIZE = 4; // px
+const CELL_SIZE = 5; // px
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
@@ -13,6 +13,8 @@ const height = 200;
 const grid = Grid.new(width, height);
 
 const canvas = document.getElementById("game-of-life-canvas");
+const cursorSpawn = document.getElementById("cursorSpawn");
+
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 
@@ -23,9 +25,10 @@ grid.spawn_pulsar(10, 35);
 grid.spawn_pentadecanthlon(25, 55);
 grid.spawn_beacon(55, 3);
 grid.spawn_toad(65, 15);
-grid.spawn_acorn(100, 175);
+grid.spawn_acorn(25, 175);
 grid.spawn_r_pentomino(180, 25);
 grid.spawn_infinite_growth_1(100, 100);
+grid.spawn_infinite_growth_1(175, 175);
 
 const ctx = canvas.getContext("2d");
 
@@ -172,7 +175,12 @@ canvas.addEventListener("click", event => {
 
     console.log("click", x, y);
 
-    grid.revive_cell(x, y);
+    if (cursorSpawn.value === 99) {
+        grid.revive_cell(x, y);
+    } else {
+        const pattern = cursorSpawn.value;
+        grid.spawn_pattern(pattern, x, y);
+    }
 
     drawCells();
     drawGrid();
@@ -214,11 +222,23 @@ const setup = () => {
     const spawnBtn = document.getElementById("spawn");
     spawnBtn.addEventListener("click", spawn);
     const spawnSelection = document.getElementById("spawnSelection");
-    get_patterns_as_string().split(",").forEach((pattern, i) => {
+    const patterns = get_patterns_as_string()
+    patterns.split(",").forEach((pattern, i) => {
         const opt = document.createElement("option");
         opt.value = i;
         opt.innerHTML = pattern;
         spawnSelection.appendChild(opt);
+    });
+
+    const dot = document.createElement("option");
+    dot.value = 99;
+    dot.innerText = "Dot";
+    cursorSpawn.appendChild(dot);
+    patterns.split(",").forEach((pattern, i) => {
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.innerHTML = pattern;
+        cursorSpawn.appendChild(opt);
     });
 
     const reviveBtn = document.getElementById("revive");
