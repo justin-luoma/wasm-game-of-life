@@ -18,14 +18,13 @@ const cursorSpawn = document.getElementById("cursorSpawn");
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 
-grid.spawn_glider_gun(30, 15);
+grid.spawn_glider_gun(75, 15);
 grid.spawn_pulsar(10, 35);
 grid.spawn_pentadecanthlon(25, 55);
-grid.spawn_beacon(55, 3);
-grid.spawn_toad(65, 15);
 grid.spawn_acorn(25, 175);
 grid.spawn_r_pentomino(180, 25);
-grid.spawn_infinite_growth_1(100, 100);
+grid.spawn_glider_loop(100, 100);
+grid.spawn_pulsar(100, 100);
 grid.spawn_infinite_growth_1(175, 175);
 
 const ctx = canvas.getContext("2d");
