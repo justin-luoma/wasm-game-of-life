@@ -24,6 +24,7 @@ pub enum Pattern {
     DieHard,
     Acorn,
     Almosymmetric,
+    GliderLoop,
     InfiniteGrowth1,
     InfiniteGrowth2,
 }

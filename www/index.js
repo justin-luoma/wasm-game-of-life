@@ -3,7 +3,7 @@ import {memory} from "wasm-game-of-life/wasm_game_of_life_bg.wasm";
 
 const CELL_SIZE = 5; // px
 const GRID_COLOR = "#CCCCCC";
-const DEAD_COLOR = "#FFFFFF";
+const DEAD_COLOR = "#b3b3b3";
 const ALIVE_COLOR = "#000000";
 
 
