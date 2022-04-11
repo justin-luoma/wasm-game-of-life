@@ -1,7 +1,7 @@
 import {get_patterns_as_string, Grid} from "wasm-game-of-life";
 import {memory} from "wasm-game-of-life/wasm_game_of_life_bg.wasm";
 
-const CELL_SIZE = 5; // px
+const CELL_SIZE = 4; // px
 const GRID_COLOR = "#CCCCCC";
 const DEAD_COLOR = "#FFFFFF";
 const ALIVE_COLOR = "#000000";
@@ -33,9 +33,9 @@ const renderLoop = () => {
     drawGrid();
     drawCells();
 
-    for (let i = 0; i < 9; i++) {
-        grid.step_forward();
-    }
+    // for (let i = 0; i < 9; i++) {
+    grid.step_forward();
+    // }
 
     animationId = requestAnimationFrame(renderLoop);
 };
