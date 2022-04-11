@@ -164,7 +164,7 @@ canvas.addEventListener("click", event => {
 
     console.log("click", x, y);
 
-    if (cursorSpawn.value === 99) {
+    if (cursorSpawn.value === "99") {
         grid.revive_cell(x, y);
     } else {
         const pattern = cursorSpawn.value;
