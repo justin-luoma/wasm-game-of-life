@@ -18,8 +18,6 @@ const cursorSpawn = document.getElementById("cursorSpawn");
 canvas.height = (CELL_SIZE + 1) * height + 1;
 canvas.width = (CELL_SIZE + 1) * width + 1;
 
-let paused;
-
 grid.spawn_glider_gun(30, 15);
 grid.spawn_pulsar(10, 35);
 grid.spawn_pentadecanthlon(25, 55);
@@ -56,15 +54,6 @@ const spawn = () => {
     const y = document.getElementById("ySpawn").value
     const pattern = document.getElementById("spawnSelection").value;
     grid.spawn_pattern(pattern, x, y);
-};
-
-const tick = () => {
-    if (!paused) {
-        grid.step_forward();
-        setTimeout(() => {
-            tick();
-        }, 150);
-    }
 };
 
 function randomize() {
@@ -182,8 +171,8 @@ canvas.addEventListener("click", event => {
         grid.spawn_pattern(pattern, x, y);
     }
 
-    drawCells();
     drawGrid();
+    drawCells();
 });
 
 function reviveCell() {

@@ -90,6 +90,7 @@ impl Grid {
                 Pattern::InfiniteGrowth1 => self.spawn_infinite_growth_1(x, y),
                 Pattern::InfiniteGrowth2 => self.spawn_infinite_growth_2(x, y),
                 Pattern::Copperhead => self.spawn_copperhead(x, y),
+                Pattern::Almosymmetric => self.spawn_almosymmetric(x, y),
             }
         }
     }
@@ -475,6 +476,30 @@ impl Grid {
                 (x + 5, y + 2),
                 (x + 6, y + 2),
             ])
+        }
+    }
+
+    pub fn spawn_almosymmetric(&mut self, x: usize, y: usize) {
+        if x + 7 < self.size.0 && y + 8 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x + 3, y),
+                (x + 3, y + 1),
+                (x + 5, y + 1),
+                (x + 1, y + 2),
+                (x + 6, y + 3),
+                (x + 7, y + 3),
+                (x, y + 4),
+                (x + 1, y + 4),
+                (x + 6, y + 5),
+                (x + 2, y + 6),
+                (x + 1, y + 7),
+                (x + 4, y + 7),
+                (x + 6, y + 7),
+                (x + 1, y + 8),
+                (x + 2, y + 8),
+                (x + 5, y + 8),
+                (x + 6, y + 8),
+            ]);
         }
     }
 

@@ -23,6 +23,7 @@ pub enum Pattern {
     RPentomino,
     DieHard,
     Acorn,
+    Almosymmetric,
     InfiniteGrowth1,
     InfiniteGrowth2,
 }
