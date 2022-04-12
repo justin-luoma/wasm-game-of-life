@@ -30,6 +30,7 @@ grid.spawn_infinite_growth_1(175, 175);
 const ctx = canvas.getContext("2d");
 
 let animationId = null;
+let delayMs = 200;
 
 const delay = async (ms) => {
     return new Promise((resolve => setTimeout(()=> resolve(), ms)));
@@ -37,7 +38,7 @@ const delay = async (ms) => {
 
 const renderLoop = async () => {
 
-    await delay(200);
+    await delay(delayMs);
 
     drawGrid();
     drawCells();
@@ -237,6 +238,18 @@ const setup = () => {
 
     const reviveBtn = document.getElementById("revive");
     reviveBtn.addEventListener("click", reviveCell);
+
+    const delaySlider = document.getElementById("delay");
+    delaySlider.value = delayMs;
+    delaySlider.addEventListener("input", (event) => {
+        delayMs = event.target.value;
+    });
+
+    const delayDefault = document.getElementById("delayDefault");
+    delayDefault.addEventListener("click", () => {
+        delayMs = 200;
+        delaySlider.value = delayMs;
+    })
 
     const dimensions = document.getElementById("dimensions");
     dimensions.innerText = `${width} x ${height}`

@@ -53,6 +53,13 @@
             border: thin solid black;
             padding: 1em;
         }
+
+        #delayControl {
+            display: flex;
+            flex-direction: column;
+            border: thin solid black;
+            padding: 1em;
+        }
     </style>
 </head>
 <body>
@@ -91,6 +98,13 @@
     </div>
     <div>
         <label>Dimensions: <span id="dimensions"></span></label>
+        <br/>
+        <div id="delayControl">
+            <label>Frame delay:
+                <input type="range" min="0" max="500" id="delay">
+            </label>
+            <button id="delayDefault">Default</button>
+        </div>
     </div>
 </div>
 </body>
