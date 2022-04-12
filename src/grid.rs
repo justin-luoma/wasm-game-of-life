@@ -97,6 +97,8 @@ impl Grid {
                 Pattern::Almosymmetric => self.spawn_almosymmetric(x, y),
                 Pattern::GliderLoop => self.spawn_glider_loop(x, y),
                 Pattern::FastForwardForceField => self.spawn_fast_forward_force_field(x, y),
+                Pattern::InfiniteGrowth3 => self.spawn_infinite_growth_3(x, y),
+                Pattern::InfiniteGrowth4 => self.spawn_infinite_growth_4(x, y),
             }
         }
     }
@@ -590,6 +592,76 @@ impl Grid {
                 (x, y + 4),
                 (x + 2, y + 4),
                 (x + 4, y + 4),
+            ])
+        }
+    }
+
+    pub fn spawn_infinite_growth_3(&mut self, x: usize, y: usize) {
+        if x + 38 < self.size.0 && y < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x + 1, y),
+                (x + 2, y),
+                (x + 3, y),
+                (x + 4, y),
+                (x + 5, y),
+                (x + 6, y),
+                (x + 7, y),
+                (x + 9, y),
+                (x + 10, y),
+                (x + 11, y),
+                (x + 12, y),
+                (x + 13, y),
+                (x + 17, y),
+                (x + 18, y),
+                (x + 19, y),
+                (x + 26, y),
+                (x + 27, y),
+                (x + 28, y),
+                (x + 29, y),
+                (x + 30, y),
+                (x + 31, y),
+                (x + 32, y),
+                (x + 34, y),
+                (x + 35, y),
+                (x + 36, y),
+                (x + 37, y),
+                (x + 38, y),
+            ])
+        }
+    }
+
+    pub fn spawn_infinite_growth_4(&mut self, x: usize, y: usize) {
+        if x + 38 < self.size.0 && y < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y),
+                (x, y + 1),
+                (x, y + 2),
+                (x, y + 3),
+                (x, y + 4),
+                (x, y + 5),
+                (x, y + 6),
+                (x, y + 7),
+                (x, y + 9),
+                (x, y + 10),
+                (x, y + 11),
+                (x, y + 12),
+                (x, y + 13),
+                (x, y + 17),
+                (x, y + 18),
+                (x, y + 19),
+                (x, y + 26),
+                (x, y + 27),
+                (x, y + 28),
+                (x, y + 29),
+                (x, y + 30),
+                (x, y + 31),
+                (x, y + 32),
+                (x, y + 34),
+                (x, y + 35),
+                (x, y + 36),
+                (x, y + 37),
+                (x, y + 38),
             ])
         }
     }

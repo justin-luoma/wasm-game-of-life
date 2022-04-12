@@ -31,6 +31,8 @@ pub enum Pattern {
     GliderLoop,
     InfiniteGrowth1,
     InfiniteGrowth2,
+    InfiniteGrowth3,
+    InfiniteGrowth4,
 }
 
 impl Pattern {
