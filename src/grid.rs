@@ -1,3 +1,4 @@
+use std::convert::TryFrom;
 use std::fmt::{Display, Formatter};
 
 use rand::prelude::*;
@@ -75,7 +76,10 @@ impl Grid {
                 Pattern::Beacon => self.spawn_beacon(x, y),
                 Pattern::Pulsar => self.spawn_pulsar(x, y),
                 Pattern::Pentadecathlon => self.spawn_pentadecanthlon(x, y),
-                Pattern::Glider => self.spawn_glider(x, y),
+                Pattern::Glider1 => self.spawn_glider_1(x, y),
+                Pattern::Glider2 => self.spawn_glider_2(x, y),
+                Pattern::Glider3 => self.spawn_glider_3(x, y),
+                Pattern::Glider4 => self.spawn_glider_4(x, y),
                 Pattern::GliderGun => self.spawn_glider_gun(x, y),
                 Pattern::Block => self.spawn_block(x, y),
                 Pattern::BeeHive => self.spawn_beehive(x, y),
@@ -131,6 +135,18 @@ impl Grid {
         }
     }
 
+    pub fn random_patterns(&mut self) {
+        let mut rng = rand::thread_rng();
+
+        for x in 0..self.size.0 {
+            for y in 0..self.size.1 {
+                let rand = rng.gen_range(0..Pattern::count());
+                let patterns = Pattern::get_patterns();
+                self.spawn_pattern(patterns[rand], x, y);
+            }
+        }
+    }
+
     pub fn reset(&mut self) {
         for x in 0..self.size.0 {
             for y in 0..self.size.1 {
@@ -139,7 +155,7 @@ impl Grid {
         }
     }
 
-    pub fn spawn_glider(&mut self, x: usize, y: usize) {
+    pub fn spawn_glider_1(&mut self, x: usize, y: usize) {
         if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
             self.set_cells_alive(vec![
                 (x, y - 1),
@@ -147,6 +163,42 @@ impl Grid {
                 (x, y + 1),
                 (x - 1, y + 1),
                 (x + 1, y + 1),
+            ]);
+        }
+    }
+
+    pub fn spawn_glider_2(&mut self, x: usize, y: usize) {
+        if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y + 1),
+                (x + 1, y),
+                (x, y - 1),
+                (x - 1, y - 1),
+                (x + 1, y - 1),
+            ]);
+        }
+    }
+
+    pub fn spawn_glider_3(&mut self, x: usize, y: usize) {
+        if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y - 1),
+                (x - 1, y),
+                (x, y + 1),
+                (x + 1, y + 1),
+                (x - 1, y + 1),
+            ]);
+        }
+    }
+
+    pub fn spawn_glider_4(&mut self, x: usize, y: usize) {
+        if x - 1 >= 0 && x + 1 < self.size.0 && y - 1 >= 0 && y + 1 < self.size.1 {
+            self.set_cells_alive(vec![
+                (x, y + 1),
+                (x - 1, y),
+                (x, y - 1),
+                (x + 1, y - 1),
+                (x - 1, y - 1),
             ]);
         }
     }

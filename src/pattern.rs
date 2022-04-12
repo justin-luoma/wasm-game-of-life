@@ -1,9 +1,9 @@
-use strum::{Display, IntoEnumIterator};
-use strum_macros::EnumIter;
+use strum::{Display, EnumCount, IntoEnumIterator};
+use strum_macros::{EnumCount as EnumCountMacro, EnumIter};
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-#[derive(Display, EnumIter)]
+#[derive(Copy, Clone, Display, EnumIter, EnumCountMacro)]
 pub enum Pattern {
     Blinker,
     Block,
@@ -14,7 +14,10 @@ pub enum Pattern {
     Beacon,
     Pulsar,
     Pentadecathlon,
-    Glider,
+    Glider1,
+    Glider2,
+    Glider3,
+    Glider4,
     LightSpaceship,
     MiddleSpaceship,
     HeavySpaceship,
@@ -28,6 +31,16 @@ pub enum Pattern {
     GliderLoop,
     InfiniteGrowth1,
     InfiniteGrowth2,
+}
+
+impl Pattern {
+    pub fn count() -> usize {
+        Pattern::COUNT
+    }
+
+    pub fn get_patterns() -> Vec<Pattern> {
+        Pattern::iter().collect()
+    }
 }
 
 #[wasm_bindgen]

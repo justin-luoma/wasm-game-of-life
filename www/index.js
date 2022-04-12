@@ -31,7 +31,13 @@ const ctx = canvas.getContext("2d");
 
 let animationId = null;
 
-const renderLoop = () => {
+const delay = async (ms) => {
+    return new Promise((resolve => setTimeout(()=> resolve(), ms)));
+};
+
+const renderLoop = async () => {
+
+    await delay(200);
 
     drawGrid();
     drawCells();
