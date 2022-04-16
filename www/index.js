@@ -2,9 +2,9 @@ import {get_patterns_as_string, Grid} from "wasm-game-of-life";
 import {memory} from "wasm-game-of-life/wasm_game_of_life_bg.wasm";
 
 const CELL_SIZE = 5; // px
-const GRID_COLOR = "#CCCCCC";
-const DEAD_COLOR = "#b3b3b3";
-const ALIVE_COLOR = "#000000";
+const GRID_COLOR = "#003b00";
+const DEAD_COLOR = "#000000";
+const ALIVE_COLOR = "#008f11";
 
 
 const width = 200;
@@ -29,30 +29,26 @@ grid.spawn_infinite_growth_1(175, 175);
 
 const ctx = canvas.getContext("2d");
 
-let animationId = null;
+let animationIds = [];
 let delayMs = 200;
+let paused = false;
 
 const delay = async (ms) => {
     return new Promise((resolve => setTimeout(()=> resolve(), ms)));
 };
 
 const renderLoop = async () => {
+    if (!paused) {
+        await delay(delayMs);
+        drawGrid();
+        drawCells();
 
-    await delay(delayMs);
-
-    drawGrid();
-    drawCells();
-
-    // for (let i = 0; i < 9; i++) {
-    grid.step_forward();
-    // }
-
-    animationId = requestAnimationFrame(renderLoop);
+        grid.step_forward();
+        const animationId = requestAnimationFrame(renderLoop);
+        animationIds.push(animationId);
+    }
 };
 
-const isPaused = () => {
-    return animationId === null;
-};
 
 
 const spawn = () => {
@@ -78,12 +74,14 @@ const pauseBtn = document.getElementById("pause");
 
 function pause() {
     pauseBtn.innerText = "Resume";
-    cancelAnimationFrame(animationId);
-    animationId = null;
+    animationIds.forEach(animationId => cancelAnimationFrame(animationId));
+    paused = true;
+    animationIds = [];
 }
 
 function play() {
     pauseBtn.innerText = "Pause";
+    paused = false;
     renderLoop();
 }
 
@@ -170,7 +168,7 @@ canvas.addEventListener("click", event => {
 
     console.log("click", x, y);
 
-    if (cursorSpawn.value === "99") {
+    if (cursorSpawn.value === "9999") {
         grid.revive_cell(x, y);
     } else {
         const pattern = cursorSpawn.value;
@@ -207,7 +205,7 @@ const setup = () => {
 
     const pauseBtn = document.getElementById("pause");
     pauseBtn.addEventListener("click", () => {
-        if (isPaused()) {
+        if (paused) {
             play();
         } else {
             pause();
@@ -226,7 +224,7 @@ const setup = () => {
     });
 
     const dot = document.createElement("option");
-    dot.value = 99;
+    dot.value = "9999";
     dot.innerText = "Dot";
     cursorSpawn.appendChild(dot);
     patterns.split(",").forEach((pattern, i) => {

@@ -16,6 +16,12 @@ pub struct Grid {
     size: (usize, usize),
 }
 
+const UNDER_POP: usize = 2;
+
+const OVER_POP: usize = 3;
+
+const BIRTH: usize = 3;
+
 #[wasm_bindgen]
 impl Grid {
     pub fn new(size_x: usize, size_y: usize) -> Self {
@@ -142,9 +148,11 @@ impl Grid {
 
         for x in 0..self.size.0 {
             for y in 0..self.size.1 {
-                let rand = rng.gen_range(0..Pattern::count());
-                let patterns = Pattern::get_patterns();
-                self.spawn_pattern(patterns[rand], x, y);
+                if random_bool(&mut rng) {
+                    let rand = rng.gen_range(0..Pattern::count());
+                    let patterns = Pattern::get_patterns();
+                    self.spawn_pattern(patterns[rand], x, y);
+                }
             }
         }
     }
@@ -1004,17 +1012,15 @@ impl Grid {
         for x in 0..self.size.0 {
             for y in 0..self.size.1 {
                 let alive_neighbors = state.alive_neighbors(x, y);
-                let mut cell = self.get_mut_cell(x, y);
-                if cell.state == CellState::Alive {
-                    if alive_neighbors < 2 {
-                        cell.state = CellState::Dead;
-                    }
-                    if alive_neighbors > 3 {
-                        cell.state = CellState::Dead;
-                    }
+                let current_cell = state.get_cell(x, y);
+                let mut future_cell = self.get_mut_cell(x, y);
+                if current_cell.state == CellState::Alive
+                    && (alive_neighbors != UNDER_POP && alive_neighbors != OVER_POP)
+                {
+                    future_cell.state = CellState::Dead;
                 }
-                if alive_neighbors == 3 {
-                    cell.state = CellState::Alive;
+                if current_cell.state == CellState::Dead && (alive_neighbors == BIRTH) {
+                    future_cell.state = CellState::Alive;
                 }
             }
         }

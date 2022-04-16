@@ -11,4 +11,5 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin(['index.html'])
   ],
+  watch: true,
 };
