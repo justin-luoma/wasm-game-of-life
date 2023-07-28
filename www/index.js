@@ -49,7 +49,12 @@ const renderLoop = async () => {
     }
 };
 
-
+const rleSpawn = () => {
+    const x = document.getElementById("rleX").value;
+    const y = document.getElementById("rleY").value;
+    const rle = document.getElementById("rle").value;
+    grid.rle_spawn(x, y, rle);
+}
 
 const spawn = () => {
     const x = document.getElementById("xSpawn").value
@@ -236,6 +241,9 @@ const setup = () => {
 
     const reviveBtn = document.getElementById("revive");
     reviveBtn.addEventListener("click", reviveCell);
+
+    const rleBtn = document.getElementById("rleBtn");
+    rleBtn.addEventListener("click", rleSpawn);
 
     const delaySlider = document.getElementById("delay");
     delaySlider.value = delayMs;

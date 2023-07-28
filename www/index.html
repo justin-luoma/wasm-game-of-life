@@ -51,6 +51,13 @@
             padding: 1em;
         }
 
+        #rleSpawn {
+            display: flex;
+            flex-direction: column;
+            border: thin solid black;
+            padding: 1em;
+        }
+
         #delayControl {
             display: flex;
             flex-direction: column;
@@ -91,6 +98,18 @@
             <label>
                 spawn at cursor: <select id="cursorSpawn"></select>
             </label>
+        </div>
+        <div id="rleSpawn">
+            <label>
+                x: <input type="number" id="rleX" value="0">
+            </label>
+            <label>
+                y: <input type="number" id="rleY" value="0">
+            </label>
+            <label>
+                rle: <textarea id="rle"></textarea>
+            </label>
+            <button id="rleBtn">Spawn</button>
         </div>
     </div>
     <div>

@@ -7,6 +7,7 @@ use wasm_bindgen::prelude::*;
 use crate::cell::Cell;
 use crate::cell_state::CellState;
 use crate::pattern::Pattern;
+use crate::pattern::Pattern::Pentadecathlon;
 use crate::random_bool;
 
 #[wasm_bindgen]
@@ -16,11 +17,9 @@ pub struct Grid {
     size: (usize, usize),
 }
 
-const UNDER_POP: usize = 2;
+const SURVIVE_VALUES: [usize; 4] = [1, 2, 3, 4];
 
-const OVER_POP: usize = 3;
-
-const BIRTH: usize = 3;
+const BIRTH_VALUES: [usize; 2] = [3, 8];
 
 #[wasm_bindgen]
 impl Grid {
@@ -162,6 +161,48 @@ impl Grid {
             for y in 0..self.size.1 {
                 self.update_cell(x, y, CellState::Dead);
             }
+        }
+    }
+
+    pub fn rle_spawn(&mut self, x: usize, y: usize, rle: &str) {
+        let rules: Vec<&str> = rle.split("").collect();
+        let mut cur_x = x;
+        let mut cur_y = y;
+        let mut count = String::new();
+        rules.iter().for_each(|rule| match *rule {
+            "b" => {
+                if count.is_empty() {
+                    cur_x += 1;
+                } else {
+                    cur_x += count.parse::<usize>().unwrap();
+                    count = String::new();
+                }
+            }
+            "o" => {
+                if count.is_empty() {
+                    self.revive_cell(cur_x, cur_y);
+                    cur_x += 1;
+                } else {
+                    let c: usize = count.parse().unwrap();
+                    self.revive_cells_in_row(c, cur_x, cur_y);
+                    cur_x += c;
+                    count = String::new();
+                }
+            }
+            "$" => {
+                cur_y += 1;
+                cur_x = x;
+            }
+            "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" => {
+                count.push_str(rule);
+            }
+            _ => {}
+        });
+    }
+
+    fn revive_cells_in_row(&mut self, count: usize, x: usize, y: usize) {
+        for i in 0..count {
+            self.revive_cell(x + i, y);
         }
     }
 
@@ -1015,11 +1056,13 @@ impl Grid {
                 let current_cell = state.get_cell(x, y);
                 let mut future_cell = self.get_mut_cell(x, y);
                 if current_cell.state == CellState::Alive
-                    && (alive_neighbors != UNDER_POP && alive_neighbors != OVER_POP)
+                    && (!SURVIVE_VALUES.contains(&alive_neighbors))
                 {
                     future_cell.state = CellState::Dead;
                 }
-                if current_cell.state == CellState::Dead && (alive_neighbors == BIRTH) {
+                if current_cell.state == CellState::Dead
+                    && (BIRTH_VALUES.contains(&alive_neighbors))
+                {
                     future_cell.state = CellState::Alive;
                 }
             }
